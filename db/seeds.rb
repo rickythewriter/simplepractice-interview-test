@@ -10,40 +10,41 @@ Appointment.destroy_all
 Patient.destroy_all
 Doctor.destroy_all
 
-# Create ten doctors with unique names
+# Create doctors - ten doctors, w/ unique names
 10.times do
     Doctor.create(
         :name => Faker::Name.unique.name
     )
+end
 
-    # For each doctor, create ten patients with unique names
-    doctor_curr = Doctor.last
+# Create patients - w/ unique names, ten per doctor
+Doctor.all.each do |doctor|
     10.times do 
         Patient.create(
-            :doctor_id => doctor_curr.id,
+            :doctor_id => doctor.id,
             :name => Faker::Name.unique.name
         )
-
-        # For each patient, create ten appointments
-        # Five in the past; five in the future
-        patient_curr = Patient.last
-        5.times do
-            Appointment.create(
-                :doctor_id => doctor_curr.id,
-                :patient_id => patient_curr.id,
-                :start_time => Faker::Time.between_dates(from: '2022-01-01', to: '2022-06-30', period: :day),
-                :duration_in_minutes => 60
-            )
-        end
-        5.times do
-            Appointment.create(
-                :doctor_id => doctor_curr.id,
-                :patient_id => patient_curr.id,
-                :start_time => Faker::Time.between_dates(from: '2022-07-14', to: '2022-12-31', period: :day),
-                :duration_in_minutes => 60
-            )
-        end
-
     end
+end
 
+# Create appointments - ten per patient
+Patient.all.each do |patient|
+    # Five in the past
+    5.times do
+        Appointment.create(
+            :doctor_id => patient.doctor_id,
+            :patient_id => patient.id,
+            :start_time => Faker::Time.backward(days:182, period: :day),
+            :duration_in_minutes => 60
+        )
+    end
+    # Five in the future
+    5.times do
+        Appointment.create(
+            :doctor_id => patient.doctor_id,
+            :patient_id => patient.id,
+            :start_time => Faker::Time.forward(days:182, period: :day),
+            :duration_in_minutes => 60
+        )
+    end
 end
