@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
 
   validates :doctor_id, :patient_id, :start_time, :duration_in_minutes, presence: true
+  validates :start_time, uniqueness: true
 
   # Type Validations
   validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
@@ -32,22 +33,12 @@ class Appointment < ApplicationRecord
   end
 
   # Assumption: Each patient has a unique name
-  def self.patient_exists?(name)
-    patient = Patient.where(name: name).last
-    patient_exists = patient != nil
-  end
-
-  # Assumption: Each patient has a unique name
   def self.find_patient_id(name)
     if self.patient_exists?(name)
       return patient_id = Patient.where(name: name).last.id
     else
       return nil
     end
-  end
-
-  def self.doctor_exists?(id)
-    return Doctor.where(id: id).length != 0
   end
 
 end
