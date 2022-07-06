@@ -31,14 +31,19 @@ class Appointment < ApplicationRecord
     appointments = appointments[idx_start, length]
   end
 
+  # Assumption: Each patient has a unique name
   def self.patient_exists?(name)
-    patient = Patient.find(name: name)
+    patient = Patient.where(name: name).last
     patient_exists = patient != nil
   end
 
+  # Assumption: Each patient has a unique name
   def self.find_patient_id(name)
-    patient = Patient.find(name: name)
-    patient.id
+    if self.patient_exists?(name)
+      return patient_id = Patient.where(name: name).last.id
+    else
+      return nil
+    end
   end
 
 end
