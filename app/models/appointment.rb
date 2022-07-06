@@ -1,7 +1,6 @@
 class Appointment < ApplicationRecord
 
   validates :doctor_id, :patient_id, :start_time, :duration_in_minutes, presence: true
-  validates :start_time, uniqueness: true
 
   # Type Validations
   validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
