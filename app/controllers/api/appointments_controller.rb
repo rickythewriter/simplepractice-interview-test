@@ -5,13 +5,13 @@ class Api::AppointmentsController < ApplicationController
     if defined?(params[:past]) # Initialize only past or only future appointments
 
       # Declare conditions
-      showOnlyPastAppointments = params[:past] == 1
-      showOnlyFutureAppointments = params[:past] == 0
+      show_only_past_appointments = params[:past] == 1
+      show_only_future_appointments = params[:past] == 0
 
       # Note: appointments are ordered by start_time, from closest to furthest
-      if showOnlyPastAppointments
+      if show_only_past_appointments
         @appointments = Appointment.where("start_time < ?", DateTime.now).order(start_time: :asc)
-      elsif showOnlyFutureAppointments
+      elsif show_only_future_appointments
         @appointments = Appointment.where("start_time > ?", DateTime.now).order(start_time: :asc)
       end
 
@@ -37,21 +37,15 @@ class Api::AppointmentsController < ApplicationController
 
     # Initialize appointment parameters
     appointment_params = params.require(:appointment).permit(:patient, :doctor, :start_time, :duration)
-
-    # Initialize patient variable
     patient_name = appointment_params[:patient]
-    patient = Patient.find(name: patient_name)
 
-    # TODO: Make validate patient exists helper method in Appointment class
-    
-    # Validate for existence of patient
-    patientExists = patient != nil
-    if !patientExists
+    # Validate patient existence
+    if !Appointment.patient_exists?(patient_name)
       return head :bad_request
     end
 
     # Query patient's ID
-    patient_id = patient.id
+    patient_id = Appointment.find_patient_id(patient_name)
 
     # Create appointment
     appointment = Appointment.create(
