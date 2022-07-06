@@ -34,7 +34,34 @@ class Api::AppointmentsController < ApplicationController
   end
 
   def create
-    # TODO:
+
+    # Initialize appointment parameters
+    appointment_params = params.require(:appointment).permit(:patient, :doctor, :start_time, :duration)
+
+    # TODO: Validate data types
+    # {
+    #   patient: { name: <string> },
+    #   doctor: { id: <int> },
+    #   start_time: <iso8604>,
+    #   duration_in_minutes: <int>
+    # }
+
+    # Query patient's ID
+    # TODO: Validate for when there is no patient with this name
+    patient_name = appointment_params[:patient]
+    patient_id = Patient.find(name: patient_name).id
+
+    # Create appointment
+    Appointment.create(
+      :doctor_id => appointment_params[:doctor]
+      :patient_id => patient_id
+      :start_time => appointment_params[:start_time]
+      :duration_in_minutes => appointment_params[:duration]
+    )
+
+    # Redirect to appointments page
+    redirect_to @appointments
+
   end
 
 end
