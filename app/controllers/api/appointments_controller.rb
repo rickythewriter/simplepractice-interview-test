@@ -6,7 +6,8 @@ class Api::AppointmentsController < ApplicationController
     # Initialize @appointment instance
     appointments = Appointment.all
 
-    if (params[:past] != nil) # Initialize only past or only future appointments
+    # Return past or future appointments only, if applicable
+    if (params[:past] != nil)
       appointments = Appointment.future_or_past_appointments(params[:past])
     end
     
@@ -17,8 +18,6 @@ class Api::AppointmentsController < ApplicationController
       appointments = Appointment.paginated_appointments(length, page, appointments)
     end
     
-    # render appointments
-    # head :ok
     render json: appointments, status: 200
 
   end
