@@ -1,36 +1,25 @@
 class Api::AppointmentsController < ApplicationController
+
+  # before_action :sanitize_page_params
+
   def index
-
     # Initialize @appointment instance
-    if defined?(params[:past]) # Initialize only past or only future appointments
+    appointments = Appointment.all
 
-      # Declare conditions
-      show_only_past_appointments = params[:past] == 1
-      show_only_future_appointments = params[:past] == 0
-
-      # Note: appointments are ordered by start_time, from closest to furthest
-      if show_only_past_appointments
-        @appointments = Appointment.where("start_time < ?", DateTime.now).order(start_time: :asc)
-      elsif show_only_future_appointments
-        @appointments = Appointment.where("start_time > ?", DateTime.now).order(start_time: :asc)
-      end
-
-    else # Initialize all appointments
-      @appointments = Appointment.all
+    # Return past or future appointments only, if applicable
+    if (params[:past] != nil)
+      appointments = Appointment.future_or_past_appointments(params[:past])
     end
     
     # Paginate, if applicable
     if (params[:length] != nil && params[:page] != nil)
-      length = params[:length]
-      idx_start = (params[:page] - 1) * length #idx_start is the offset from the beginning
-
-      # only include length number of appointments, starting at index of offset
-      @appointments = @appointments[idx_start, length]
+      length = params[:length].to_i
+      page = params[:page].to_i
+      appointments = Appointment.paginated_appointments(length, page, appointments)
     end
     
-    # render @appointments
-    # head :ok
-    render json: @appointments, status: 200
+    render json: appointments, status: 200
+
   end
 
   def create
