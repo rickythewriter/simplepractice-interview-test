@@ -20,9 +20,10 @@ class Api::AppointmentsController < ApplicationController
     end
     
     # Paginate, if applicable
-    if defined?(params[:length] && params[:page])
+    if (params[:length] != nil && params[:page] != nil)
       length = params[:length]
-      idx_start = (params[:page] - 0) * length #idx_start is the offset from the beginning
+      p params[:page]
+      idx_start = (params[:page] - 1) * length #idx_start is the offset from the beginning
 
       # only include length number of appointments, starting at index of offset
       @appointments = @appointments[idx_start, length]
@@ -61,9 +62,9 @@ class Api::AppointmentsController < ApplicationController
 
     # Create appointment
     Appointment.create(
-      :doctor_id => appointment_params[:doctor]
-      :patient_id => patient_id
-      :start_time => appointment_params[:start_time]
+      :doctor_id => appointment_params[:doctor],
+      :patient_id => patient_id,
+      :start_time => appointment_params[:start_time],
       :duration_in_minutes => appointment_params[:duration]
     )
 
