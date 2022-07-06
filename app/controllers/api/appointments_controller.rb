@@ -46,10 +46,18 @@ class Api::AppointmentsController < ApplicationController
     #   duration_in_minutes: <int>
     # }
 
-    # Query patient's ID
-    # TODO: Validate for when there is no patient with this name
+    # Initialize patient variable
     patient_name = appointment_params[:patient]
-    patient_id = Patient.find(name: patient_name).id
+    patient = Patient.find(name: patient_name)
+
+    # Validate for existence of patient
+    patientExists = patient != nil
+    if !patientExists
+      return head :bad_request
+    end
+
+    # Query patient's ID
+    patient_id = patient.id
 
     # Create appointment
     Appointment.create(
