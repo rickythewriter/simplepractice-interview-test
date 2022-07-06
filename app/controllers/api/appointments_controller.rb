@@ -22,16 +22,15 @@ class Api::AppointmentsController < ApplicationController
     # Paginate, if applicable
     if (params[:length] != nil && params[:page] != nil)
       length = params[:length]
-      p params[:page]
       idx_start = (params[:page] - 1) * length #idx_start is the offset from the beginning
 
       # only include length number of appointments, starting at index of offset
       @appointments = @appointments[idx_start, length]
     end
     
-    @appointments
-
-    head :ok
+    # render @appointments
+    # head :ok
+    render json: @appointments, status: 200
   end
 
   def create
@@ -39,18 +38,12 @@ class Api::AppointmentsController < ApplicationController
     # Initialize appointment parameters
     appointment_params = params.require(:appointment).permit(:patient, :doctor, :start_time, :duration)
 
-    # TODO: Validate data types
-    # {
-    #   patient: { name: <string> },
-    #   doctor: { id: <int> },
-    #   start_time: <iso8604>,
-    #   duration_in_minutes: <int>
-    # }
-
     # Initialize patient variable
     patient_name = appointment_params[:patient]
     patient = Patient.find(name: patient_name)
 
+    # TODO: Make validate patient exists helper method in Appointment class
+    
     # Validate for existence of patient
     patientExists = patient != nil
     if !patientExists
@@ -61,15 +54,14 @@ class Api::AppointmentsController < ApplicationController
     patient_id = patient.id
 
     # Create appointment
-    Appointment.create(
+    appointment = Appointment.create(
       :doctor_id => appointment_params[:doctor],
       :patient_id => patient_id,
       :start_time => appointment_params[:start_time],
       :duration_in_minutes => appointment_params[:duration]
     )
 
-    # Redirect to appointments page
-    redirect_to @appointments
+    render json: appointment, status: 200
 
   end
 
