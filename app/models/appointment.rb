@@ -1,15 +1,23 @@
 class Appointment < ApplicationRecord
 
-# TODO: Validate data types
-# {
-#   patient: { name: <string> },
-#   doctor: { id: <int> },
-#   start_time: <iso8604>,
-#   duration_in_minutes: <int>
-# }
+  validates :doctor_id, :patient_id, :start_time, :duration_in_minutes, presence: true
 
-#Note: Class methods start with self.
+  # Type Validations
+  validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
+  # TODO - Validate DateTime data type (iso8604?) for start_time
 
+  # Associations
   belongs_to :doctor
   belongs_to :patient
+
+  def patient_exists?(name)
+    patient = Patient.find(name: name)
+    patient_exists = patient != nil
+  end
+
+  def find_patient_id(name)
+    patient = Patient.find(name: name)
+    patient.id
+  end
+
 end
