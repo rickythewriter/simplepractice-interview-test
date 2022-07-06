@@ -46,4 +46,8 @@ class Appointment < ApplicationRecord
     end
   end
 
+  def self.doctor_exists?(id)
+    return Doctor.where(id: id).length != 0
+  end
+
 end
