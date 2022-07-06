@@ -14,7 +14,7 @@ class Api::DoctorsController < ApplicationController
 
         # Return doctors without appointments
         # head :ok
-
         render json: @doctors, status: 200
+        
     end
 end
