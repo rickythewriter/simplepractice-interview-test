@@ -25,11 +25,12 @@ class Api::AppointmentsController < ApplicationController
   def create
 
     # Initialize appointment parameters
-    appointment_params = params.require(:appointment).permit(:patient, :doctor, :start_time, :duration)
+    appointment_params = params.permit(:patient, :doctor, :start_time, :duration)
     patient_name = appointment_params[:patient]
+    doctor_id = appointment_params[:doctor]
 
-    # Validate patient existence
-    if !Appointment.patient_exists?(patient_name)
+    # Validate patient and doctor existence
+    if !Appointment.patient_exists?(patient_name) || !Appointment.doctor_exists?(doctor_id)
       return head :bad_request
     end
 
