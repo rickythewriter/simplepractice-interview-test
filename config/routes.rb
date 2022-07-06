@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :appointments, only: [:index]
     get '/doctors', to: 'doctors#index'
+    post '/appointments', to: 'appointments#create'
   end
 end

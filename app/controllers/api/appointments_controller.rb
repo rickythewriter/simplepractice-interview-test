@@ -22,4 +22,29 @@ class Api::AppointmentsController < ApplicationController
 
   end
 
+  def create
+
+    # Initialize appointment parameters
+    appointment_params = params.permit(:patient, :doctor, :start_time, :duration)
+    
+    # Query patient's ID
+    patient_name = appointment_params[:patient]
+    patient_id = Appointment.find_patient_id(patient_name)
+
+    # Create appointment
+    appointment = Appointment.create(
+      :doctor_id => appointment_params[:doctor],
+      :patient_id => patient_id,
+      :start_time => appointment_params[:start_time],
+      :duration_in_minutes => appointment_params[:duration]
+    )
+
+    if !appointment.valid?
+      return head :bad_request
+    end
+
+    render json: appointment, status: 200
+
+  end
+
 end
