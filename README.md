@@ -89,8 +89,8 @@ Ricky Thang's Comments
    - Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
 
    Requirement 5:
-    - Return error messages when validations have not been passed
-    - Write a validation to prevent duplicate appointments
+    - Return error messages when validations have not been passed.
+    - Write a validation to prevent duplicate appointments.
 
  * How did _you_ gain confidence your submission is correct?
 
