@@ -69,3 +69,44 @@ When evaluating the program, the following are among the factors considered:
    Would we enjoy your code living along side our own?
  * Is it slow? For small to medium sized inputs, the processing delay should
    probably not be noticeable.
+   
+   
+Ricky Thang's Comments
+----------------------
+
+ * Does it run?
+
+   Yes, all of them run.
+
+ * Does it produce the correct output?
+
+   Minimum requirements have been met.
+
+   I would have liked to make the following improvements, if there were more time:
+
+   Requirement 1:
+   - Seed appointment start_times to be on the hour or half-hour.
+
+   Requirement 5:
+    - Return error messages when validations have not been passed
+    - Write a validation to prevent duplicate appointments
+
+ * How did _you_ gain confidence your submission is correct?
+
+   Although I would have liked to write spec tests, I tested each requirement manually, and thoroughly.
+
+ * Were appropriate algorithms and data structures chosen?
+
+   Yes, as there were no operations with a slow time complexitiy, such as O(n^2)
+
+ * Was it well written? Are the source code and algorithms implemented cleanly?
+   Would we enjoy your code living along side our own?
+
+   I tried to write the code with my signature elegance, but as with any draft, 
+   it could be improved with more editing.
+
+ * Is it slow? For small to medium sized inputs, the processing delay should
+   probably not be noticeable.
+   
+   No, as most of the operations used were in linear time, at the slowest.
+
