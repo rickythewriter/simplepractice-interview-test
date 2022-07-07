@@ -86,6 +86,7 @@ Ricky Thang's Comments
 
    Requirement 1:
    - Seed appointment start_times to be on the hour or half-hour.
+   - Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
 
    Requirement 5:
     - Return error messages when validations have not been passed
