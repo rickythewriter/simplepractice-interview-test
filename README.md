@@ -99,7 +99,7 @@ Ricky Thang's Comments
 
  * Were appropriate algorithms and data structures chosen?
 
-   Yes, as there were no operations with a slow time complexitiy, such as O(n^2)
+   Yes, as there were no operations with a slow time complexitiy, such as O(n^2).
 
  * Was it well written? Are the source code and algorithms implemented cleanly?
    Would we enjoy your code living along side our own?
