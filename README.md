@@ -84,17 +84,18 @@ Ricky Thang's Comments
 
    I would have liked to make the following improvements, if there were more time:
 
-   Requirement 1:
-   - Seed appointment start_times to be on the hour or half-hour.
-   - Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
+   -Requirement 1:
+   -- Seed appointment start_times to be on the hour or half-hour.
+   -- Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
 
-   Requirement 5:
-    - Return error messages when validations have not been passed
-    - Write a validation to prevent duplicate appointments
+   -Requirement 5:
+    -- Return error messages when validations have not been passed
+    -- Write a validation to prevent duplicate appointments
 
  * How did _you_ gain confidence your submission is correct?
 
-   Although I would have liked to write spec tests, I tested each requirement manually, and thoroughly.
+   I tested each requirement manually, and thoroughly.
+   However, if time permitted, I would've also attempted writing spec tests, as I find this modular approach more organized.
 
  * Were appropriate algorithms and data structures chosen?
 
@@ -103,10 +104,12 @@ Ricky Thang's Comments
  * Was it well written? Are the source code and algorithms implemented cleanly?
    Would we enjoy your code living along side our own?
 
-   I tried to write the code with my signature elegance, but as with any draft, 
-   it could be improved with more editing.
+   As a professional writer, attention to readability (particularly "skim"-ability) is evident in my submission. 
+   Though, any draft could be improved, with more editing.
    
-   Please consider that I had no prior experience with Ruby. I learned it over the Independence Day holiday weekend. Notice my attention to detail, e.g. helper methods in controllers are written idiomatically within model classes.
+   Also consider that:
+   - I had no prior experience with Ruby. I learned it over the Independence Day holiday weekend. 
+   - Notice my attention to idiomatic style, e.g. helper methods for controllers are written within model classes.
 
  * Is it slow? For small to medium sized inputs, the processing delay should
    probably not be noticeable.
