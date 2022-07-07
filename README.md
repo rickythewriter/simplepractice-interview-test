@@ -84,13 +84,13 @@ Ricky Thang's Comments
 
    I would have liked to make the following improvements, if there were more time:
 
-   -Requirement 1:
-   -- Seed appointment start_times to be on the hour or half-hour.
-   -- Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
+   Requirement 1:
+   - Seed appointment start_times to be on the hour or half-hour.
+   - Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
 
-   -Requirement 5:
-    -- Return error messages when validations have not been passed
-    -- Write a validation to prevent duplicate appointments
+   Requirement 5:
+    - Return error messages when validations have not been passed
+    - Write a validation to prevent duplicate appointments
 
  * How did _you_ gain confidence your submission is correct?
 
