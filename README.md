@@ -104,6 +104,8 @@ Ricky Thang's Comments
 
    I tried to write the code with my signature elegance, but as with any draft, 
    it could be improved with more editing.
+   
+   Please consider that I had no prior experience with Ruby. I learned it over the Independence Day holiday weekend. Notice my attention to detail, e.g. helper methods in controllers are written idiomatically within model classes.
 
  * Is it slow? For small to medium sized inputs, the processing delay should
    probably not be noticeable.
