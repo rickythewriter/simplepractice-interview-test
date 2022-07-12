@@ -20,12 +20,16 @@ class Appointment < ApplicationRecord
 
   def self.paginated_appointments(length, page_number, appointments)
     
-    if page_number < 1
+    idx_start = (page_number - 1) * length #idx_start is the offset from the beginning
+
+    range_special_case = idx_start == appointments.length
+    range_wraps = page_number < 1 
+
+    if range_special_case || range_wraps
       return nil
     end
 
-    idx_start = (page_number - 1) * length #idx_start is the offset from the beginning
-    appointments = appointments[idx_start, length]
+    appointments = appointments[idx_start, length] #appointments[1000, 5]
   end
 
   # Assumption: Each patient has a unique name
