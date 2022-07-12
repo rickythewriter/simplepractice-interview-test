@@ -29,7 +29,7 @@ class Appointment < ApplicationRecord
       return nil
     end
 
-    appointments = appointments[idx_start, length] #appointments[1000, 5]
+    appointments = appointments[idx_start, length]
   end
 
   private
