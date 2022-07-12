@@ -13,11 +13,22 @@ RSpec.describe "/api/appointments", type: :request do
             :name => Faker::Name.unique.name
         )
 
-        10.times do
+        # 5 appointments in the past
+        5.times do
             Appointment.create(
                 :doctor_id => patient.doctor_id,
                 :patient_id => patient.id,
-                :start_time => Faker::Time.between_dates(from: Date.today - 182, to: Date.today + 182, period: :day),
+                :start_time => Faker::Time.backward(days:182, period: :day),
+                :duration_in_minutes => 60
+            )
+        end
+
+        # 5 appointments in the future
+        5.times do
+            Appointment.create(
+                :doctor_id => patient.doctor_id,
+                :patient_id => patient.id,
+                :start_time => Faker::Time.forward(days:182, period: :day),
                 :duration_in_minutes => 60
             )
         end
@@ -25,25 +36,33 @@ RSpec.describe "/api/appointments", type: :request do
 
     describe "GET /api/appointments?past=1" do
         it "returns only appointments in the past" do
-            get "/api/appointments?past=1"
+            get "/api/appointments", params:{
+                past: 1
+            }
             json = JSON.parse(response.body)
+            # puts "Right now, the time is: " + Time.now.to_s
             # puts json.length.to_s + " appointments in the past"
             json.each do |appointment|
                 # pp appointment["start_time"]
                 expect(appointment["start_time"]).to be < Time.now
             end
+            expect(json.length).to be 5
         end
     end
 
     describe "GET /api/appointments?past=0" do
         it "returns only appointments in the future" do
-            get "/api/appointments?past=0"
+            get "/api/appointments", params:{
+                past: 0
+            }
             json = JSON.parse(response.body)
+            # puts "Right now, the time is: " + Time.now.to_s
             # puts json.length.to_s + " appointments in the future"
             json.each do |appointment|
                 # pp appointment["start_time"]
                 expect(appointment["start_time"]).to be > Time.now
             end
+            expect(json.length).to be 5
         end
     end
 
@@ -59,7 +78,7 @@ RSpec.describe "/api/appointments", type: :request do
             }
 
             appointments_on_page = JSON.parse(response.body)
-            puts "There are " + appointments_on_page.length.to_s + " appointments on the page."
+            # puts "There are " + appointments_on_page.length.to_s + " appointments on the page."
             expect(appointments_on_page.length).to eql num_of_entries
         end
 
@@ -135,5 +154,5 @@ RSpec.describe "/api/appointments", type: :request do
         end
 
     end
-    
+
 end
