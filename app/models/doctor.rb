@@ -4,18 +4,10 @@ class Doctor < ApplicationRecord
 
   def self.doctors_without_appointments
 
-    # Initialize doctors variable
-    doctors = []
+    ids_doctors_with_appointments = Appointment.distinct.pluck(:doctor_id).sort
+    doctors_without_appointments = Doctor.where.not(id: ids_doctors_with_appointments);
 
-    # Delete doctors with appointments
-    Doctor.all.each do |doctor|
-        hasAppointment = Appointment.where(doctor_id: doctor.id).length != 0
-        if !hasAppointment
-            doctors.push(doctor)
-        end
-    end
-
-    return doctors
+    return doctors_without_appointments
 
   end
 

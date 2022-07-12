@@ -10,14 +10,6 @@ class Appointment < ApplicationRecord
   belongs_to :doctor
   belongs_to :patient
 
-  def self.past_appointments
-    self.where("start_time < ?", DateTime.now).order(start_time: :desc)
-  end
-
-  def self.future_appointments
-    self.where("start_time > ?", DateTime.now).order(start_time: :asc)
-  end
-
   def self.future_or_past_appointments(past)
     if past == "1"
       self.past_appointments
@@ -37,18 +29,18 @@ class Appointment < ApplicationRecord
   end
 
   # Assumption: Each patient has a unique name
-  def self.patient_exists?(name)
-    patient = Patient.where(name: name).last
-    patient_exists = patient != nil
+  def self.find_patient_id(name)
+    patient_id = Patient.where(name: name).last.id
   end
 
-  # Assumption: Each patient has a unique name
-  def self.find_patient_id(name)
-    if self.patient_exists?(name)
-      return patient_id = Patient.where(name: name).last.id
-    else
-      return nil
-    end
+  private
+
+  def self.past_appointments
+    self.where("start_time < ?", DateTime.now).order(start_time: :desc)
+  end
+
+  def self.future_appointments
+    self.where("start_time > ?", DateTime.now).order(start_time: :asc)
   end
 
 end

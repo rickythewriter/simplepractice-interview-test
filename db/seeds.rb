@@ -18,22 +18,26 @@ Doctor.destroy_all
 end
 
 # Create patients - w/ unique names, ten per doctor
-Doctor.all.each do |doctor|
+doctor_ids = Doctor.ids;
+doctor_ids.each do |doctor_id|
     10.times do 
         Patient.create(
-            :doctor_id => doctor.id,
+            :doctor_id => doctor_id,
             :name => Faker::Name.unique.name
         )
     end
 end
 
 # Create appointments - ten per patient
-Patient.all.each do |patient|
+patients = Patient.pluck(:id, :doctor_id)
+patients.each do |patient|
+    doctor_id = patient[1]
+    patient_id = patient[0]
     # Five in the past
     5.times do
         Appointment.create(
-            :doctor_id => patient.doctor_id,
-            :patient_id => patient.id,
+            :doctor_id => doctor_id,
+            :patient_id => patient_id,
             :start_time => Faker::Time.backward(days:182, period: :day),
             :duration_in_minutes => 60
         )
@@ -41,8 +45,8 @@ Patient.all.each do |patient|
     # Five in the future
     5.times do
         Appointment.create(
-            :doctor_id => patient.doctor_id,
-            :patient_id => patient.id,
+            :doctor_id => doctor_id,
+            :patient_id => patient_id,
             :start_time => Faker::Time.forward(days:182, period: :day),
             :duration_in_minutes => 60
         )
