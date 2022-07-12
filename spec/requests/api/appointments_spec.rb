@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'faker'
 
-RSpec.describe "Api::AppointmentsController", type: :request do
+RSpec.describe "/api/appointments", type: :request do
     
     before do
         doctor = Doctor.create(
