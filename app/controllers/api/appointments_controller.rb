@@ -29,7 +29,7 @@ class Api::AppointmentsController < ApplicationController
     
     # Query patient's ID
     patient_name = appointment_params[:patient]
-    patient_id = Appointment.find_patient_id(patient_name)
+    patient_id = Patient.where(name: patient_name).last.id # Assumption: Each patient has a unique name
 
     # Create appointment
     appointment = Appointment.create(

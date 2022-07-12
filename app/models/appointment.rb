@@ -32,11 +32,6 @@ class Appointment < ApplicationRecord
     appointments = appointments[idx_start, length] #appointments[1000, 5]
   end
 
-  # Assumption: Each patient has a unique name
-  def self.find_patient_id(name)
-    patient_id = Patient.where(name: name).last.id
-  end
-
   private
 
   def self.past_appointments
