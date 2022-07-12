@@ -132,7 +132,7 @@ RSpec.describe "/api/appointments", type: :request do
                 page: 0
             }
             appointments_on_page = JSON.parse(response.body)
-            expect(appointments_on_page.length).to eql 0
+            expect(appointments_on_page).to eql nil
         end
 
         it "returns no appointments, when `page` is less than 0" do
@@ -141,7 +141,7 @@ RSpec.describe "/api/appointments", type: :request do
                 page: -1
             }
             appointments_on_page = JSON.parse(response.body)
-            expect(appointments_on_page.length).to eql 0
+            expect(appointments_on_page).to eql nil
         end
 
         it "returns no appointments, when `page` is out of bounds" do
@@ -150,7 +150,7 @@ RSpec.describe "/api/appointments", type: :request do
                 page: 3
             }
             appointments_on_page = JSON.parse(response.body)
-            expect(appointments_on_page.length).to eql 0
+            expect(appointments_on_page).to eql nil
         end
 
     end
