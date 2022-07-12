@@ -27,6 +27,11 @@ class Appointment < ApplicationRecord
   end
 
   def self.paginated_appointments(length, page_number, appointments)
+    
+    if page_number < 1
+      return nil
+    end
+
     idx_start = (page_number - 1) * length #idx_start is the offset from the beginning
     appointments = appointments[idx_start, length]
   end
