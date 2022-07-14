@@ -1,14 +1,15 @@
 class Appointment < ApplicationRecord
 
-  validates :doctor_id, :patient_id, :start_time, :duration_in_minutes, presence: true
-
-  # Type Validations
-  validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
-  # TODO - Validate DateTime data type (iso8604?) for start_time
-
   # Associations
   belongs_to :doctor
   belongs_to :patient
+
+  # Validations
+  validates :doctor_id, :patient_id, :start_time, :duration_in_minutes, presence: true
+  validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
+  # TODO - Validate DateTime data type (iso8604?) for start_time
+
+  
 
   def self.future_or_past_appointments(past)
     if past == "1"
