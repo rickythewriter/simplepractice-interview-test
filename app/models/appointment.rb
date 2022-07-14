@@ -9,38 +9,32 @@ class Appointment < ApplicationRecord
   validates :doctor_id, :patient_id, :duration_in_minutes, numericality: { only_integer: true }
   # TODO - Validate DateTime data type (iso8604?) for start_time
 
-  
+  # Scopes
+  scope :past, -> { where("start_time < ?", DateTime.now).order(start_time: :desc) }
+  scope :future, -> { where("start_time > ?", DateTime.now).order(start_time: :asc) }
+  scope :paginated, -> (length, page_number) { limit(length.to_i).offset((page_number.to_i - 1) * length.to_i)}
 
-  def self.future_or_past_appointments(past)
-    if past == "1"
-      self.past_appointments
-    elsif past == "0"
-      self.future_appointments
+  def self.filter_by_past_param(past_param)
+    case past_param
+    when "1"
+      self.past
+    when "0"
+      self.future
+    when nil
+      self.all
+    else
+      self.none
     end
   end
 
-  def self.paginated_appointments(length, page_number, appointments)
-    
-    idx_start = (page_number - 1) * length #idx_start is the offset from the beginning
+  def self.pagination_params_valid?(length, page_number)
 
-    range_special_case = idx_start == appointments.length
-    range_wraps = page_number < 1 
+    # Convert to integer
+    length = length.to_i
+    page_number = page_number.to_i
 
-    if range_special_case || range_wraps
-      return nil
-    end
-
-    appointments = appointments[idx_start, length]
-  end
-
-  private
-
-  def self.past_appointments
-    self.where("start_time < ?", DateTime.now).order(start_time: :desc)
-  end
-
-  def self.future_appointments
-    self.where("start_time > ?", DateTime.now).order(start_time: :asc)
+    # Check if length and page number are valid
+    return length > 0 && page_number > 0
   end
 
 end

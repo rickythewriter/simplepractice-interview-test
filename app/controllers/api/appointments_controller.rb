@@ -3,21 +3,26 @@ class Api::AppointmentsController < ApplicationController
   # before_action :sanitize_page_params
 
   def index
-    # Initialize appointments variable
-    appointments = Appointment.all
 
-    # Return past or future appointments only, if applicable
-    if (params[:past] != nil)
-      appointments = appointments.future_or_past_appointments(params[:past])
-    end
+    # Initialize appointments
+    appointments = Appointment.filter_by_past_param(params[:past])
+
+    # Declare variables for pagination
+    to_be_paginated = (params[:length].present? && params[:page].present?)
+    pagination_params_are_valid = appointments.pagination_params_valid?(params[:length], params[:page])
     
-    # Paginate, if applicable
-    if (params[:length] != nil && params[:page] != nil)
-      length = params[:length].to_i
-      page = params[:page].to_i
-      appointments = appointments.paginated_appointments(length, page, appointments)
+    # Handle pagination
+    if to_be_paginated
+
+      # Validate pagination - render nil with 400 status if pagination parameters invalid
+      if !pagination_params_are_valid
+        return render json: nil, status: :bad_request
+      end
+
+      # Paginate appointments
+      appointments = appointments.paginated(params[:length], params[:page])
     end
-    
+
     render json: appointments, status: 200
 
   end
