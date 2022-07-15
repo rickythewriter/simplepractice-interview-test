@@ -85,7 +85,7 @@ Ricky Thang's Comments
    I would have liked to make the following improvements, if there were more time:
 
    Requirement 1:
-   - Seed appointment start_times to be on the hour or half-hour.
+   - ~~Seed appointment start_times to be on the hour or half-hour.~~
    - Remove prefixes (such as Mr. Mrs. Rev.) from dummy names.
 
    Requirement 5:
@@ -96,14 +96,10 @@ Ricky Thang's Comments
 
    I tested each requirement manually, and thoroughly.
    However, if time permitted, I would've also attempted writing spec tests, as I find this modular approach more organized.
-   
-   As of 07/11/2022, I have added rspec tests for the appointment- and doctor- API's.
 
  * Were appropriate algorithms and data structures chosen?
 
    Yes, as there were no operations with a slow time complexitiy, such as O(n^2).
-   
-   As of 07/11/2022, I have removed N+1 queries from the code.
 
  * Was it well written? Are the source code and algorithms implemented cleanly?
    Would we enjoy your code living along side our own?
@@ -120,5 +116,40 @@ Ricky Thang's Comments
    
    No, as most of the operations used were in linear time, at the slowest.
    
-   As of 07/11/2022, I have removed N+1 queries from the code.
+   
+Updates - July 11th, 2022
+-------------------------
+
+- Removed N+1 queries from code.
+- Added rspec tests for the appointment- and doctor- API's.
+
+
+Updates - July 15th, 2022
+-------------------------
+* Requirement 1 - Seeds
+   
+   Updated appointment seeds to start on the hour, instead of randomly.
+   
+* Requirements 2, 3 - GET api/appointments
+
+   - Added spec tests to check if api/appointments returned expected results for scope, pagination, and structure.
+   - Fixed structuring of endpoint.
+      ```
+      [
+        {
+          id: <int>,
+          patient: { name: <string> },
+          doctor : { name: <string>, id: <int> },
+          created_at: <iso8601>,
+          start_time: <iso8601>,
+          duration_in_minutes: <int>
+        }, ...
+      ]
+      ```
+   - Refactored to include scopes in appointment model wherever possible.
+   
+* Requirement 4 - api/doctors
+   - Added spec tests to check if api/doctors returned expected results.
+   - Refactored to include scopes in doctor model wherever possible.
+   
 
