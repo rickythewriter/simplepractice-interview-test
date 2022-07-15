@@ -1,23 +1,17 @@
 class Api::AppointmentsController < ApplicationController
 
-  # before_action :sanitize_page_params
+  rescue_from ActiveRecord::StatementInvalid, with: :pagination_out_of_bounds
 
   def index
-    # Initialize appointments variable
-    appointments = Appointment.all
 
-    # Return past or future appointments only, if applicable
-    if (params[:past] != nil)
-      appointments = appointments.future_or_past_appointments(params[:past])
+    # Initialize appointments with `past` param
+    appointments = Appointment.query_with_past_param(params[:past])
+
+    # Handle pagination
+    if (params[:length].present? && params[:page].present?)
+      appointments = appointments.paginated(params[:length], params[:page])
     end
-    
-    # Paginate, if applicable
-    if (params[:length] != nil && params[:page] != nil)
-      length = params[:length].to_i
-      page = params[:page].to_i
-      appointments = appointments.paginated_appointments(length, page, appointments)
-    end
-    
+
     render json: appointments, status: 200
 
   end
@@ -45,6 +39,12 @@ class Api::AppointmentsController < ApplicationController
 
     render json: appointment, status: 200
 
+  end
+
+  private
+
+  def pagination_out_of_bounds
+    render json: nil, status: :bad_request
   end
 
 end
