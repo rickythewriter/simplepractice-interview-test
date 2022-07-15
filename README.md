@@ -96,10 +96,14 @@ Ricky Thang's Comments
 
    I tested each requirement manually, and thoroughly.
    However, if time permitted, I would've also attempted writing spec tests, as I find this modular approach more organized.
+   
+   As of 07/11/2022, I have added rspec tests for the appointment- and doctor- API's.
 
  * Were appropriate algorithms and data structures chosen?
 
    Yes, as there were no operations with a slow time complexitiy, such as O(n^2).
+   
+   As of 07/11/2022, I have removed N+1 queries from the code.
 
  * Was it well written? Are the source code and algorithms implemented cleanly?
    Would we enjoy your code living along side our own?
@@ -115,4 +119,6 @@ Ricky Thang's Comments
    probably not be noticeable.
    
    No, as most of the operations used were in linear time, at the slowest.
+   
+   As of 07/11/2022, I have removed N+1 queries from the code.
 
