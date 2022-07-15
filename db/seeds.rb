@@ -35,19 +35,21 @@ patients.each do |patient|
     patient_id = patient[0]
     # Five in the past
     5.times do
+        time_on_hour = Faker::Time.backward(days:182, period: :day).beginning_of_hour
         Appointment.create(
             :doctor_id => doctor_id,
             :patient_id => patient_id,
-            :start_time => Faker::Time.backward(days:182, period: :day),
+            :start_time => time_on_hour,
             :duration_in_minutes => 60
         )
     end
     # Five in the future
     5.times do
+        time_on_hour = Faker::Time.forward(days:182, period: :day).beginning_of_hour
         Appointment.create(
             :doctor_id => doctor_id,
             :patient_id => patient_id,
-            :start_time => Faker::Time.forward(days:182, period: :day),
+            :start_time => time_on_hour,
             :duration_in_minutes => 60
         )
     end
