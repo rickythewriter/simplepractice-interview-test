@@ -106,6 +106,3 @@ class Api::AppointmentsController < ApplicationController
   end
 
 end
-
-
-end
