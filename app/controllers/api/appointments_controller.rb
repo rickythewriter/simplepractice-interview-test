@@ -5,17 +5,17 @@ class Api::AppointmentsController < ApplicationController
   def index
 
     # Initialize appointments
-    appointments = Appointment.filter_by_past_param(params[:past])
+    appointments = query_by_past_param(params[:past])
+    # appointments = Appointment.filter_by_past_param(params[:past])
 
-    # Declare variables for pagination
-    to_be_paginated = (params[:length].present? && params[:page].present?)
-    pagination_params_are_valid = appointments.pagination_params_valid?(params[:length], params[:page])
-    
     # Handle pagination
+    to_be_paginated = (params[:length].present? && params[:page].present?)
+
     if to_be_paginated
 
       # Validate pagination - render nil with 400 status if pagination parameters invalid
-      if !pagination_params_are_valid
+      # pagination_params_are_valid = appointments.pagination_params_valid?(params[:length], params[:page])
+      if !pagination_params_valid?(params[:length], params[:page])
         return render json: nil, status: :bad_request
       end
 
@@ -23,6 +23,7 @@ class Api::AppointmentsController < ApplicationController
       appointments = appointments.paginated(params[:length], params[:page])
     end
 
+    # Format to meet Requirement 2
     appointments = format_for_index(appointments)
 
     render json: appointments, status: 200
@@ -79,6 +80,32 @@ class Api::AppointmentsController < ApplicationController
 
     return formatted_appointments
   end
+
+  #TODO: determine if this should be a model method
+  def query_by_past_param(past_param)
+    case past_param
+    when "1"
+      return Appointment.past
+    when "0"
+      return Appointment.future
+    when nil
+      return Appointment.all
+    else
+      return Appointment.none
+    end
+  end
+
+  #TODO: determine if this should be a model method
+  def pagination_params_valid?(length, page_number)
+    # Convert to integer
+    length = length.to_i
+    page_number = page_number.to_i
+
+    # Check if length and page number are valid
+    return length > 0 && page_number > 0
+  end
+
+end
 
 
 end
