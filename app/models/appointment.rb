@@ -27,5 +27,23 @@ class Appointment < ApplicationRecord
     end
   end
 
+  def self.format_for_index
+
+    return self.includes(:doctor, :patient).map do |appointment|
+
+      appointment = {
+        "id": appointment.id,
+        "patient": appointment.patient.name,
+        "doctor": appointment.doctor.name,
+        "created_at": appointment.created_at,
+        "start_time": appointment.start_time,
+        "duration_in_minutes": appointment.duration_in_minutes
+      }
+    
+    end
+
+  end
+
+
 end
 

@@ -12,6 +12,9 @@ class Api::AppointmentsController < ApplicationController
       appointments = appointments.paginated(params[:length], params[:page])
     end
 
+    # Format to meet Requirement 2
+    appointments = appointments.format_for_index
+
     render json: appointments, status: 200
 
   end
