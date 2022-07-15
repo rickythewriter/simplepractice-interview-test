@@ -1,7 +1,7 @@
 class Api::DoctorsController < ApplicationController
     def index
 
-        doctors = Doctor.doctors_without_appointments
+        doctors = Doctor.without_appointments
         
         render json: doctors, status: 200        
 
