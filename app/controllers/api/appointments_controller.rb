@@ -1,6 +1,6 @@
 class Api::AppointmentsController < ApplicationController
 
-  # before_action :sanitize_page_params
+  rescue_from ActiveRecord::StatementInvalid, with: :pagination_out_of_bounds
 
   def index
 
@@ -12,14 +12,6 @@ class Api::AppointmentsController < ApplicationController
     to_be_paginated = (params[:length].present? && params[:page].present?)
 
     if to_be_paginated
-
-      # Validate pagination - render nil with 400 status if pagination parameters invalid
-      # pagination_params_are_valid = appointments.pagination_params_valid?(params[:length], params[:page])
-      if !pagination_params_valid?(params[:length], params[:page])
-        return render json: nil, status: :bad_request
-      end
-
-      # Paginate appointments
       appointments = appointments.paginated(params[:length], params[:page])
     end
 
@@ -95,14 +87,8 @@ class Api::AppointmentsController < ApplicationController
     end
   end
 
-  #TODO: determine if this should be a model method
-  def pagination_params_valid?(length, page_number)
-    # Convert to integer
-    length = length.to_i
-    page_number = page_number.to_i
-
-    # Check if length and page number are valid
-    return length > 0 && page_number > 0
+  def pagination_out_of_bounds
+    render json: nil, status: :bad_request
   end
 
 end

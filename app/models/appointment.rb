@@ -28,16 +28,5 @@ class Appointment < ApplicationRecord
     end
   end
 
-  #TODO: determine if this should be a controller helper function
-  def self.pagination_params_valid?(length, page_number)
-
-    # Convert to integer
-    length = length.to_i
-    page_number = page_number.to_i
-
-    # Check if length and page number are valid
-    return length > 0 && page_number > 0
-  end
-
 end
 
