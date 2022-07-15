@@ -12,9 +12,6 @@ class Api::AppointmentsController < ApplicationController
       appointments = appointments.paginated(params[:length], params[:page])
     end
 
-    # Format to meet Requirement 2
-    appointments = format_for_index(appointments)
-
     render json: appointments, status: 200
 
   end
@@ -44,31 +41,7 @@ class Api::AppointmentsController < ApplicationController
 
   end
 
-
   private
-
-  # TODO:
-    # determine if this is appropriate for controller
-    # determine if this is the proper way to format JSON data.
-    # Am I supposed to get this result via a query in a model scope?
-  def format_for_index(appointments)
-    formatted_appointments = appointments.to_a.map do |appointment|
-
-      patient_name = Patient.find(appointment.patient_id).name
-      doctor_name = Doctor.find(appointment.doctor_id).name
-
-      appointment = {
-        "id": appointment.id,
-        "patient": patient_name,
-        "doctor": doctor_name,
-        "created_at": appointment.created_at,
-        "start_time": appointment.start_time,
-        "duration_in_minutes": appointment.duration_in_minutes
-      }
-    end
-
-    return formatted_appointments
-  end
 
   def pagination_out_of_bounds
     render json: nil, status: :bad_request
