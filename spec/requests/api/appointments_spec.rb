@@ -34,6 +34,29 @@ RSpec.describe "/api/appointments", type: :request do
         end
     end
 
+    describe "GET /api/appointments" do
+        it "is structured with the proper data" do
+
+            get "/api/appointments"
+            appointment = JSON.parse(response.body).last
+
+            # pp appointment
+
+            # These key-value pairs are returned
+            expect(appointment["id"]).not_to be_nil
+            expect(appointment["patient"]).not_to be_nil
+            expect(appointment["doctor"]).not_to be_nil
+            expect(appointment["created_at"]).not_to be_nil
+            expect(appointment["start_time"]).not_to be_nil
+            expect(appointment["duration_in_minutes"]).not_to be_nil
+
+            # These key-value pairs should not be returned
+            expect(appointment["doctor_id"]).to be_nil
+            expect(appointment["patient_id"]).to be_nil
+            expect(appointment["updated_at"]).to be_nil
+        end
+    end
+
     describe "GET /api/appointments?past=1" do
         it "returns only appointments in the past" do
             get "/api/appointments", params:{
