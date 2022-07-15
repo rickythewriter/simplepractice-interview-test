@@ -4,9 +4,8 @@ class Api::AppointmentsController < ApplicationController
 
   def index
 
-    # Initialize appointments
-    appointments = query_by_past_param(params[:past])
-    # appointments = Appointment.filter_by_past_param(params[:past])
+    # Initialize appointments with `past` param
+    appointments = Appointment.query_with_past_param(params[:past])
 
     # Handle pagination
     if (params[:length].present? && params[:page].present?)
@@ -69,20 +68,6 @@ class Api::AppointmentsController < ApplicationController
     end
 
     return formatted_appointments
-  end
-
-  #TODO: determine if this should be a model method
-  def query_by_past_param(past_param)
-    case past_param
-    when "1"
-      return Appointment.past
-    when "0"
-      return Appointment.future
-    when nil
-      return Appointment.all
-    else
-      return Appointment.none
-    end
   end
 
   def pagination_out_of_bounds
