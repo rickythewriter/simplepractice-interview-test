@@ -14,6 +14,7 @@ class Appointment < ApplicationRecord
   scope :future, -> { where("start_time > ?", DateTime.now).order(start_time: :asc) }
   scope :paginated, -> (length, page_number) { limit(length.to_i).offset((page_number.to_i - 1) * length.to_i)}
 
+  #TODO: determine if this should be controller helper function
   def self.filter_by_past_param(past_param)
     case past_param
     when "1"
@@ -27,6 +28,7 @@ class Appointment < ApplicationRecord
     end
   end
 
+  #TODO: determine if this should be a controller helper function
   def self.pagination_params_valid?(length, page_number)
 
     # Convert to integer
@@ -38,3 +40,4 @@ class Appointment < ApplicationRecord
   end
 
 end
+
