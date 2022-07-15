@@ -9,9 +9,7 @@ class Api::AppointmentsController < ApplicationController
     # appointments = Appointment.filter_by_past_param(params[:past])
 
     # Handle pagination
-    to_be_paginated = (params[:length].present? && params[:page].present?)
-
-    if to_be_paginated
+    if (params[:length].present? && params[:page].present?)
       appointments = appointments.paginated(params[:length], params[:page])
     end
 
