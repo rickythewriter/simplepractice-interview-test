@@ -173,7 +173,7 @@ RSpec.describe "/api/appointments", type: :request do
                 page: 3
             }
             appointments_on_page = JSON.parse(response.body)
-            expect(appointments_on_page).to eql nil
+            expect(appointments_on_page).to be_empty
         end
 
     end
