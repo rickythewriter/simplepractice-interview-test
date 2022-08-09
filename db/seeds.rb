@@ -2,7 +2,7 @@
 # - There should be 10 Doctors with unique names
 # - Each doctor should have 10 patients with unique names
 # - Each patient should have 10 appointments (5 in the past, 5 in the future)
-#   - Each appointment should be 50 minutes in duration
+# - Each appointment should be 50 minutes in duration
 
 require "faker"
 
@@ -40,7 +40,7 @@ patients.each do |patient|
             :doctor_id => doctor_id,
             :patient_id => patient_id,
             :start_time => time_on_hour,
-            :duration_in_minutes => 60
+            :duration_in_minutes => 50
         )
     end
     # Five in the future
@@ -50,7 +50,7 @@ patients.each do |patient|
             :doctor_id => doctor_id,
             :patient_id => patient_id,
             :start_time => time_on_hour,
-            :duration_in_minutes => 60
+            :duration_in_minutes => 50
         )
     end
 end
