@@ -105,8 +105,8 @@ Updates - July 11th, 2022
 - Added rspec tests for the appointment- and doctor- API's.
 
 
-Ricky Thang's Comments
-----------------------
+Comments - Before July 11th, 2022
+---------------------------------
 
  * Does it run?
 
