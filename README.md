@@ -69,8 +69,42 @@ When evaluating the program, the following are among the factors considered:
    Would we enjoy your code living along side our own?
  * Is it slow? For small to medium sized inputs, the processing delay should
    probably not be noticeable.
+
+Updates - July 15th, 2022
+-------------------------
+* Requirement 1 - Seeds
    
+   Updated appointment seeds to start on the hour, instead of randomly.
    
+* Requirements 2, 3 - GET api/appointments
+
+   - Added spec tests to check if api/appointments returned expected results for scope, pagination, and structure.
+   - Fixed structuring of endpoint.
+      ```
+      [
+        {
+          id: <int>,
+          patient: { name: <string> },
+          doctor : { name: <string>, id: <int> },
+          created_at: <iso8601>,
+          start_time: <iso8601>,
+          duration_in_minutes: <int>
+        }, ...
+      ]
+      ```
+   - Refactored to include scopes in appointment model wherever possible.
+   
+* Requirement 4 - api/doctors
+   - Added spec tests to check if api/doctors returned expected results.
+   - Refactored to include scopes in doctor model wherever possible.
+   
+Updates - July 11th, 2022
+-------------------------
+
+- Removed N+1 queries from code.
+- Added rspec tests for the appointment- and doctor- API's.
+
+
 Ricky Thang's Comments
 ----------------------
 
@@ -115,41 +149,5 @@ Ricky Thang's Comments
    probably not be noticeable.
    
    No, as most of the operations used were in linear time, at the slowest.
-   
-   
-Updates - July 11th, 2022
--------------------------
-
-- Removed N+1 queries from code.
-- Added rspec tests for the appointment- and doctor- API's.
-
-
-Updates - July 15th, 2022
--------------------------
-* Requirement 1 - Seeds
-   
-   Updated appointment seeds to start on the hour, instead of randomly.
-   
-* Requirements 2, 3 - GET api/appointments
-
-   - Added spec tests to check if api/appointments returned expected results for scope, pagination, and structure.
-   - Fixed structuring of endpoint.
-      ```
-      [
-        {
-          id: <int>,
-          patient: { name: <string> },
-          doctor : { name: <string>, id: <int> },
-          created_at: <iso8601>,
-          start_time: <iso8601>,
-          duration_in_minutes: <int>
-        }, ...
-      ]
-      ```
-   - Refactored to include scopes in appointment model wherever possible.
-   
-* Requirement 4 - api/doctors
-   - Added spec tests to check if api/doctors returned expected results.
-   - Refactored to include scopes in doctor model wherever possible.
    
 
